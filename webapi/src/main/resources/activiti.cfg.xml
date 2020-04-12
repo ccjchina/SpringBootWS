@@ -1,0 +1,71 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans   http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- 3.2.processEngineConfiguration
+    Stand alone app          : org.activiti.engine.impl.cfg.StandaloneProcessEngineConfiguration
+    Test (Use in-memory h2)  : org.activiti.engine.impl.cfg.StandaloneInMemProcessEngineConfiguration
+    Spring integration       : org.activiti.spring.SpringProcessEngineConfiguration
+    Stand alone app with JTA : org.activiti.engine.impl.cfg.JtaProcessEngineConfiguration
+    -->
+    <bean id="processEngineConfiguration"
+          class="org.activiti.engine.impl.cfg.StandaloneInMemProcessEngineConfiguration">
+
+        <!-- 3.3-3.8.database connection
+        support h2, musql, oracle, postgres, db2, mssql
+        -->
+        <property name="jdbcUrl" value="jdbc:h2:mem:activiti;DB_CLOSE_DELAY=1000"/>
+        <property name="jdbcDriver" value="org.h2.Driver"/>
+        <property name="jdbcUsername" value="sa"/>
+        <property name="jdbcPassword" value=""/>
+        <!-- Optional database connection properties * The unit of XXXTime is millisec *
+        <property name="jdbcMaxActiveConnections" value="10" />
+        <property name="jdbcMaxIdleConnections" value="" />
+        <property name="jdbcMaxCheckoutTime" value="20000" />
+        <property name="jdbcMaxWaitTime" value="20000" />
+        -->
+        <!-- Schema Update
+        false (default) : If the db schema version != activiti lib version then abend
+        true            : If the db schema version != activiti lib version then update db schema
+        create-drop     : Always create and drop schema
+        <property name="databaseSchemaUpdate" value="false" />
+        -->
+
+        <!-- 3.9-3.11 Job Executor
+        By default, the JobExecutor is activated when the process engine boots.
+        By default, the AsyncExecutor is not enabled and the JobExecutor is used
+        due to legacy reasons.
+        It's however recommended to use the new AsyncExecutor instead.
+        -->
+        <!--
+        <property name="jobExecutorActivate" value="false" />
+        <property name="asyncExecutorEnabled" value="true" />
+        <property name="asyncExecutorActivate" value="true" />
+        -->
+
+        <!-- 3.12. Mail Configuration (for email task)
+        |======================|=======================|
+        |property name         | Default value         |
+        |======================|=======================|
+        |mailServerHost        | localhost             |
+        |mailServerPort        | 25                    |
+        |mailServerDefaultFrom | activiti@activiti.org |
+        |mailServerUsername    | (not set)             |
+        |mailServerPassword    | (not set)             |
+        |mailServerUseSSL      | (not set)             |
+        |mailServerUseTLS      | (not set)             |
+        |======================|=======================|
+        -->
+        <property name="mailServerHost" value="localhost"/>
+        <property name="mailServerPort" value="50025"/>
+
+        <!-- 3.13. History (for logging task execution)
+        <property name="history" value="audit" />
+        -->
+
+        <!-- 3.15. Cache (default is no limit)
+        <property name="processDefinitionCacheLimit" value="10" />
+        -->
+    </bean>
+
+</beans>
