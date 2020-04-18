@@ -51,7 +51,6 @@ public class WebapiApplicationTests {
 
     @Test
     public void singletonTest() {
-        Singleton1 s = Singleton1.INSTANCE;
-        s.doJob();
+
     }
 }
